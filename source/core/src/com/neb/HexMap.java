@@ -1,11 +1,16 @@
 package com.neb;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.ModelLoader;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.VertexAttributes;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelCache;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.graphics.g3d.loader.G3dModelLoader;
+import com.badlogic.gdx.graphics.g3d.loader.ObjLoader;
 import com.badlogic.gdx.graphics.g3d.utils.MeshPartBuilder;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Vector3;
@@ -23,19 +28,22 @@ public class HexMap {
     public Map<HexPos, Hex> hexMap;
 
     public ModelCache cache;
+    public ModelLoader loader;
+
 
     public HexMap(int width, int height){
         this.width = width;
         this.height = height;
         hexMap = new HashMap<HexPos, Hex>();
         cache = new ModelCache();
+        loader = new ObjLoader();
+
     }
     public HexMap(){
         this(10, 10);
     }
     public void testInitialize(){
-        Material triMat = new Material();
-        Model testModel = getTestModel();
+        Model testModel = loader.loadModel(Gdx.files.internal("core/assets/hex.obj"));
         cache.begin();
         for (int x = 0; x < 1; x++){
             for (int y = 0; y < 1; y++){
